@@ -1,0 +1,244 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --background: #f3eee6;
+  --foreground: #1c1612;
+  --surface: #fffcf8;
+  --surface-2: #efe6da;
+  --muted: #5e564e;
+  --line: #e4d8c8;
+  --accent: #9a3f12;
+  --accent-foreground: #fffaf5;
+  --accent-soft: #f8e2cf;
+  --good: #0f6e62;
+  --good-soft: #d7f3ee;
+  --floor: #e9dcc9;
+  --floor-line: #d2c1a8;
+  --window: #c5d5e4;
+  --table-fill: #fbf6ef;
+  --table-stroke: #a98462;
+  --chair: #5d6e89;
+  --chair-reserved: #c48996;
+  --reserved: #f3d5dc;
+  --selected: #c56a12;
+  --selected-fill: #fff1dc;
+  --plant: #7d9a6e;
+  --wood-a: #f3e6d4;
+  --wood-b: #e7d5bc;
+  --shadow: 0 24px 50px -28px rgba(72, 42, 18, 0.38);
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0e0e11;
+  --foreground: #f6f1ea;
+  --surface: #17171b;
+  --surface-2: #232329;
+  --muted: #b3aaa2;
+  --line: #31313a;
+  --accent: #f0b429;
+  --accent-foreground: #1a1408;
+  --accent-soft: rgba(240, 180, 41, 0.16);
+  --good: #5ee0b5;
+  --good-soft: rgba(94, 224, 181, 0.12);
+  --floor: #1c1815;
+  --floor-line: #3c332b;
+  --window: #3d5168;
+  --table-fill: #2c261f;
+  --table-stroke: #d2b48c;
+  --chair: #93a6c4;
+  --chair-reserved: #d4a0ab;
+  --reserved: #4a3338;
+  --selected: #f0b429;
+  --selected-fill: #3d3118;
+  --plant: #6d8a62;
+  --wood-a: #26201b;
+  --wood-b: #1a1613;
+  --shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.65);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
+  --color-good-soft: var(--good-soft);
+  --font-sans: var(--font-jakarta), sans-serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+}
+
+body {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(1000px 420px at 0% -10%, rgba(180, 92, 28, 0.08), transparent 55%),
+    radial-gradient(800px 380px at 100% 0%, rgba(93, 110, 137, 0.08), transparent 50%);
+  color: var(--foreground);
+}
+
+.dark body {
+  background-image:
+    radial-gradient(1000px 420px at 0% -10%, rgba(240, 180, 41, 0.06), transparent 55%),
+    radial-gradient(800px 380px at 100% 0%, rgba(142, 162, 192, 0.06), transparent 50%);
+}
+
+::selection {
+  background: var(--accent-soft);
+  color: var(--foreground);
+}
+
+svg[viewBox="0 0 24 24"] path {
+  fill: currentColor;
+}
+
+.floor-svg {
+  display: block;
+  width: auto;
+  height: min(62dvh, 660px);
+  max-width: 100%;
+}
+
+.scroller {
+  scrollbar-width: none;
+}
+
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.lift {
+  box-shadow: var(--shadow);
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise {
+  animation: rise 240ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise {
+    animation: none;
+  }
+}
+
+.table-hit,
+.table-hit:focus,
+.table-hit:focus-visible {
+  cursor: pointer;
+  outline: none;
+}
+
+.seat {
+  fill: var(--chair);
+  transition: fill 160ms ease;
+}
+
+.table-top {
+  fill: var(--table-fill);
+  stroke: var(--table-stroke);
+  stroke-width: 1.6;
+  transition:
+    fill 160ms ease,
+    stroke 160ms ease;
+}
+
+.centerpiece {
+  fill: var(--floor-line);
+  pointer-events: none;
+}
+
+.table-hit:hover .seat {
+  fill: var(--accent);
+}
+
+.table-hit:hover .table-top {
+  stroke: var(--accent);
+}
+
+.table-hit.is-selected:not(.is-held) .seat,
+.table-hit.is-selected:not(.is-held):hover .seat {
+  fill: var(--selected);
+}
+
+.table-hit.is-selected:not(.is-held) .table-top,
+.table-hit.is-selected:not(.is-held):hover .table-top {
+  fill: var(--selected-fill);
+  stroke: var(--selected);
+  stroke-width: 2.4;
+}
+
+.table-hit.is-held .seat,
+.table-hit.is-held:hover .seat {
+  fill: var(--chair-reserved);
+}
+
+.table-hit.is-held .table-top,
+.table-hit.is-held:hover .table-top {
+  fill: var(--reserved);
+  stroke: var(--chair-reserved);
+}
+
+.table-hit.is-tight {
+  opacity: 0.38;
+}
+
+.table-hit.is-tight.is-selected {
+  opacity: 1;
+}
+
+.selected-ring {
+  fill: none;
+  stroke: var(--selected);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+  pointer-events: none;
+}
+
+.seat-count {
+  fill: var(--foreground);
+  font-size: 12px;
+  font-weight: 700;
+  font-family: var(--font-jakarta), sans-serif;
+  pointer-events: none;
+}
+
+.plan-label {
+  fill: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  font-family: var(--font-jakarta), sans-serif;
+  pointer-events: none;
+}
+
+.window-pane {
+  fill: var(--window);
+}
+
+.plant {
+  fill: var(--plant);
+}
+
+.room-shell {
+  fill: url(#wood);
+  stroke: var(--floor-line);
+  stroke-width: 1.5;
+}
